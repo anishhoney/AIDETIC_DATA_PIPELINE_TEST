@@ -1,0 +1,41 @@
+Summary Report: Implementation of Data Pipeline
+
+Approach:
+The implementation of the data pipeline involved several key steps to achieve the desired functionality of ingesting clickstream data from Kafka, storing it in a chosen data store, periodically processing the stored data, and indexing the processed data in Elasticsearch. Here is an overview of the approach taken:
+
+1. Ingestion:
+   - A Kafka consumer was set up to connect to the Kafka cluster and consume the clickstream data.
+   - The consumer was configured to read from the relevant Kafka topic.
+   - Each incoming clickstream event was processed, and the required information was extracted.
+
+2. Data Storage:
+   - Mysql was used as a storage.
+   - The data store was designed with column families for click_data, geo_data, and user_agent_data.
+   - The extracted information from clickstream events was mapped to the appropriate columns and stored in the MYSQL using a unique identifier as the row key.
+
+3. Periodic Data Processing:
+   - A job  was implemented to periodically process the stored clickstream data.
+   - The data was retrieved from the data store.
+   - Aggregation was performed on the data by URL and country, calculating the number of clicks, unique users, and average time spent on each URL by users from each country.
+   - The processed data was stored in a suitable format for indexing.
+
+4. Indexing in Elasticsearch:
+   - An Elasticsearch cluster was set up or utilized if already available.
+   - An index was defined in Elasticsearch to match the structure of the processed data.
+   - A script or application was developed to read the processed data and index it into Elasticsearch.
+   - The Elasticsearch API or a library like Elasticsearch-Py (for Python) was used to interact with the Elasticsearch cluster and perform the indexing operation.
+
+Assumptions:
+During the implementation of the data pipeline, the following assumptions were made:
+
+1. Technology Stack: The choice of specific technologies, programming languages, and frameworks was not specified. The implementation assumed the use of Kafka for ingestion,MySQL  for storage, and Elasticsearch for indexing. 
+
+2. Data Schema: The provided schema for click_data, geo_data, and user_agent_data column families was assumed to be appropriate for the use case.
+
+
+3. Data Aggregation: The approach assumed that data aggregation would be performed periodically on the stored clickstream data. The frequency and timing of the aggregation process were not specified and may depend on the volume of data, performance considerations, and business requirements.
+
+4. Indexing Configuration: The configuration and optimization of the Elasticsearch cluster for indexing were not explicitly detailed. It is assumed that the Elasticsearch cluster is properly set up, configured, and accessible. Further configuration, such as shard allocation, replication, and performance tuning, may be required based on the scale of data and query requirements.
+
+Conclusion:
+The implemented data pipeline successfully accomplishes the required steps of ingesting clickstream data, storing it in MySQL, periodically processing the stored data, and indexing the processed data in Elasticsearch. The pipeline provides the foundation for analyzing clickstream data by aggregating information by URL and country, calculating metrics such as clicks, unique users, and average time spent. 
